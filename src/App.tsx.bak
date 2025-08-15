@@ -1,0 +1,56 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
+
+const RootLayout = lazy(() => import('./layouts/RootLayout'));
+const Home = lazy(() => import('./pages/Home'));
+const Programs = lazy(() => import('./pages/Programs'));
+const Counselors = lazy(() => import('./pages/Counselors'));
+const Features = lazy(() => import('./pages/Features'));
+const Resources = lazy(() => import('./pages/Resources'));
+const About = lazy(() => import('./pages/About'));
+const Contact = lazy(() => import('./pages/Contact'));
+const Login = lazy(() => import('./pages/Login'));
+const Article = lazy(() => import('./pages/Article'));
+const EventRegistration = lazy(() => import('./pages/EventRegistration'));
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={
+          <Suspense fallback={<div>Loading...</div>}>
+            <RootLayout />
+          </Suspense>
+        }>
+          <Route index element={
+            <Suspense fallback={<div>Loading...</div>}>
+              <Home />
+            </Suspense>
+          } />
+          <Route path="programs" element={
+            <Suspense fallback={<div>Loading...</div>}>
+              <Programs />
+            </Suspense>
+          } />
+          <Route path="counselors" element={
+            <Suspense fallback={<div>Loading...</div>}>
+              <Counselors />
+            </Suspense>
+          } />
+            <Route path="features" element={<Features />} />
+            <Route path="resources">
+              <Route index element={<Resources />} />
+              <Route path="articles/:id" element={<Article />} />
+            </Route>
+            <Route path="register/:eventSlug" element={<EventRegistration />} />
+            <Route path="about" element={<About />} />
+            <Route path="contact" element={<Contact />} />
+            <Route path="login" element={<Login />} />
+          </Route>
+        </Routes>
+      </Suspense>
+    </Router>
+  );
+}
+
+export default App;
