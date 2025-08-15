@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import type { SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
@@ -7,21 +8,37 @@ const schema = yup.object({
   name: yup.string().required('Name is required'),
   role: yup.string().required('Role is required'),
   email: yup.string().email('Invalid email').required('Email is required'),
-  phone: yup.string(),
+  phone: yup.string().optional(),
   message: yup.string().required('Message is required'),
 }).required();
 
-type FormData = yup.InferType<typeof schema>;
+type FormData = {
+  name: string;
+  role: string;
+  email: string;
+  phone?: string;
+  message: string;
+};
 
 export default function Contact() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
-    resolver: yupResolver(schema)
+    resolver: yupResolver(schema) as any
   });
 
-  const onSubmit = (data: FormData) => {
-    console.log(data);
-    setIsSubmitted(true);
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    try {
+      await fetch('https://formspree.io/f/xdoqqwoj', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      setIsSubmitted(true);
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    }
   };
 
   if (isSubmitted) {
