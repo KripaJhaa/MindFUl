@@ -1,6 +1,8 @@
-# React + TypeScript + Vite
+# MindYou 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[![Deploy to GitHub Pages](https://github.com/KripaJhaa/MindFUl/actions/workflows/deploy.yml/badge.svg)](https://github.com/KripaJhaa/MindFUl/actions/workflows/deploy.yml)
+
+A mental health and wellness platform built with React + TypeScript + Vite.
 
 Currently, two official plugins are available:
 
