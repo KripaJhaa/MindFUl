@@ -7,16 +7,9 @@ on:
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
-
-concurrency: ci-${{ github.ref }}
 
 jobs:
   build-and-deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
@@ -34,15 +27,14 @@ jobs:
           npm run build
           ls -la dist/
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist
-
       - name: Deploy to GitHub Pages 🚀
-        uses: actions/deploy-pages@v4
-        with:
-          token: ${{ github.token }}
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git checkout --orphan gh-pages
+          git rm -rf .
+          mv dist/* .
+          rm -rf dist
+          git add .
+          git commit -m "Deploy to GitHub Pages"
+          git push -f origin gh-pages
