@@ -1,0 +1,4 @@
+environment: github-pages
+url: https://kripajhaa.github.io/MindFUl/
+environment_type: deployment
+deployment_branch: gh-pages
