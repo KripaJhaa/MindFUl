@@ -29,12 +29,24 @@ jobs:
 
       - name: Deploy to GitHub Pages 🚀
         run: |
+          echo "Current directory contents:"
+          ls -la
+          echo "\nDist directory contents:"
+          ls -la dist/
+          echo "\nConfiguring git..."
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
+          echo "\nCreating gh-pages branch..."
           git checkout --orphan gh-pages
+          git reset --hard
           git rm -rf .
-          mv dist/* .
-          rm -rf dist
+          echo "\nMoving dist contents..."
+          cp -r dist/* .
+          echo "\nNew directory contents:"
+          ls -la
+          echo "\nAdding files to git..."
           git add .
+          git status
           git commit -m "Deploy to GitHub Pages"
+          echo "\nPushing to gh-pages branch..."
           git push -f origin gh-pages
