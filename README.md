@@ -1,6 +1,6 @@
-# MindYou 
+# MindYou
 
-[![Deploy to GitHub Pages](https://github.com/KripaJhaa/MindFUl/actions/workflows/deploy.yml/badge.svg)](https://github.com/KripaJhaa/MindFUl/actions/workflows/deploy.yml)
+[![Deploy to GitHub Pages](https://github.com/KripaJhaa/MindFUl/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/KripaJhaa/MindFUl/actions/workflows/deploy.yml)
 
 A mental health and wellness platform built with React + TypeScript + Vite.
 
