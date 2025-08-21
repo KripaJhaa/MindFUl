@@ -1,5 +1,3 @@
-import { FC } from 'react';
-
 export interface Value {
   name: string;
   description: string;
