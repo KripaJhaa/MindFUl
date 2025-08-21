@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import type { Counselor } from '../models/types';
+import BookingForm from '../components/booking/BookingForm';
 
 export default function Counselors() {
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
+  const [selectedCounselor, setSelectedCounselor] = useState<Counselor | null>(null);
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
 
   const toggleFilter = (filter: string) => {
     setSelectedFilters(prev => 
@@ -11,6 +14,11 @@ export default function Counselors() {
         ? prev.filter(f => f !== filter)
         : [...prev, filter]
     );
+  };
+
+  const handleBooking = (counselor: Counselor) => {
+    setSelectedCounselor(counselor);
+    setIsBookingOpen(true);
   };
 
   return (
@@ -94,6 +102,7 @@ export default function Counselors() {
                 <div className="mt-auto pt-6">
                   <button
                     type="button"
+                    onClick={() => handleBooking(counselor)}
                     className="w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-colors duration-200"
                   >
                     Book Session
@@ -104,6 +113,13 @@ export default function Counselors() {
           ))}
         </div>
       </div>
+
+      <BookingForm
+        isOpen={isBookingOpen}
+        onClose={() => setIsBookingOpen(false)}
+        counselorId={selectedCounselor?.id}
+        counselorName={selectedCounselor?.name}
+      />
     </div>
   );
 }
